@@ -1,0 +1,19 @@
+# Database
+DB_HOST=
+DB_PORT=
+DB_USERNAME=
+DB_PASSWORD=
+DB_NAME=
+
+# App
+PORT=
+HOST=
+NODE_ENV=development
+
+# TypeORM
+TYPEORM_SYNCHRONIZE=false
+TYPEORM_LOGGING=true
+
+# Frontend
+FRONT_HOST=
+FRONT_PORT=

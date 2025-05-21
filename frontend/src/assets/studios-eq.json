@@ -1,0 +1,89 @@
+{
+  "Зал 1": [
+    {
+      "name": "Marshall JVM410H",
+      "desc": "100 Ватт, лампа, комплект х2",
+      "photo": "./src/assets/equipment/marshall.jpg"
+    },
+    {
+      "name": "Барабанная установка",
+      "desc": "Yamaha Stage Custom, 5-частная",
+      "photo": "./src/assets/equipment/yamaha-stage-custom.jpg"
+    },
+    {
+      "name": "SHURE SM 58",
+      "desc": "Динамический диапазон, комплект х2",
+      "photo": "./src/assets/equipment/shure-sm-58.jpg"
+    },
+    {
+      "name": "Аналоговый микшер",
+      "desc": "Behringer XENYX QX2442",
+      "photo": "./src/assets/equipment/behringer-xenyx.jpg"
+    },
+    {
+      "name": "Ampeg BA-112",
+      "desc": "Басовый усилитель",
+      "photo": "./src/assets/equipment/ampeg-ba112.jpg"
+    }
+
+  ],
+  "Зал 2": [
+    {
+      "name": "Blackstar HT STAGE 60 112",
+      "desc": "60 Ватт, лампа",
+      "photo": "./src/assets/equipment/blackstar-stage.jpg"
+    },
+    {
+      "name": "Marshall JVM410H",
+      "desc": "100 Ватт, лампа",
+      "photo": "./src/assets/equipment/marshall.jpg"
+    },
+    {
+      "name": "Барабанная установка",
+      "desc": "Natal, 4-частная",
+      "photo": "./src/assets/equipment/natal.jpg"
+    },
+    {
+      "name": "Аналоговый микшер",
+      "desc": "Behringer Q1204",
+      "photo": "./src/assets/equipment/behringer-q.jpg"
+    },
+    {
+      "name": "SHURE SM 58",
+      "desc": "Динамический диапазон, комплект х2",
+      "photo": "./src/assets/equipment/shure-sm-58.jpg"
+    },
+    {
+      "name": "Ampeg BA-112",
+      "desc": "Басовый усилитель",
+      "photo": "./src/assets/equipment/ampeg-ba112.jpg"
+    }
+  ],
+  "Зал 3": [
+    {
+      "name": "Marshall JCM 2000",
+      "desc": "60 Ватт, лампа, комплект х2",
+      "photo": "./src/assets/equipment/marshall-jcm-2000.jpg"
+    },
+    {
+      "name": "Барабанная установка",
+      "desc": "STAGG TIM122WR, 5-частная",
+      "photo": "./src/assets/equipment/stagg.jpg"
+    },
+    {
+      "name": "Аналоговый микшер",
+      "desc": "Behringer Q1204",
+      "photo": "./src/assets/equipment/behringer-q.jpg"
+    },
+    {
+      "name": "SHURE SM 58",
+      "desc": "Динамический диапазон, комплект х2",
+      "photo": "./src/assets/equipment/shure-sm-58.jpg"
+    },
+    {
+      "name": "Ampeg BA-112",
+      "desc": "Басовый усилитель",
+      "photo": "./src/assets/equipment/ampeg-ba112.jpg"
+    }
+  ]
+}

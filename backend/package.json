@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon src/app.ts",
+    "build": "tsc",
+    "typeorm": "npm run build && npx typeorm -d ./dist/database/data-source.js",
+    "migration:generate": "npm run typeorm migration:generate -- -p src/database/migrations/migration",
+    "migration:revert": "npm run typeorm migration:revert",
+    "migration:run": "npm run typeorm migration:run",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^22.15.19",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.24",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.2",
+    "nodemon": "^3.1.10",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2"
+  }
+}
