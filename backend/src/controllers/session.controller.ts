@@ -281,7 +281,6 @@ export class SessionController {
     }
   }
 
-  // Админ
   static async getStudioWeeklyAnalytics(
     req: Request,
     res: Response
