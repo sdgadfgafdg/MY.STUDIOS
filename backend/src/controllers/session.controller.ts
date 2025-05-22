@@ -5,6 +5,8 @@ import { Session } from "../database/entities/sessions.entity";
 import { Equipment } from "../database/entities/equipment.entity";
 import { SessionEquipment } from "../database/entities/session-equipment.entity";
 import { Studio } from "../database/entities/studios.entity";
+import { LessThanOrEqual, MoreThanOrEqual } from "typeorm";
+import { generateAccessCode } from "../utils/access-code";
 
 export class SessionController {
   static async getStudioAvailability(
@@ -190,6 +192,106 @@ export class SessionController {
     }
   }
 
+  // static async createBooking(req: Request, res: Response): Promise<void> {
+  //   try {
+  //     const {
+  //       client_name,
+  //       client_phone,
+  //       start_time,
+  //       end_time,
+  //       studio_id,
+  //       equipment_ids,
+  //       hours,
+  //     } = req.body;
+
+  //     if (
+  //       !client_name ||
+  //       !client_phone ||
+  //       !start_time ||
+  //       !end_time ||
+  //       !studio_id ||
+  //       !hours
+  //     ) {
+  //       res.status(400).json({ error: "Missing required fields" });
+  //       return;
+  //     }
+
+  //     const conflictingBooking = await AppDataSource.getRepository(
+  //       Session
+  //     ).findOne({
+  //       where: {
+  //         studio: { id: studio_id },
+  //         start_time: Between(new Date(start_time), new Date(end_time)),
+  //       },
+  //     });
+
+  //     if (conflictingBooking) {
+  //       res.status(400).json({ error: "Time slot is already booked" });
+  //       return;
+  //     }
+
+  //     const studio = await AppDataSource.getRepository(Studio).findOneBy({
+  //       id: studio_id,
+  //     });
+
+  //     if (!studio) {
+  //       res.status(404).json({ error: "Studio not found" });
+  //       return;
+  //     }
+
+  //     let total_price = studio.price_per_hour * hours;
+  //     const accessCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  //     const sessionRepository = AppDataSource.getRepository(Session);
+  //     const session = await sessionRepository.save({
+  //       client_name,
+  //       client_phone,
+  //       start_time: new Date(start_time),
+  //       end_time: new Date(end_time),
+  //       studio,
+  //       total_price,
+  //       accessCode,
+  //       accessGranted: false,
+  //     });
+
+  //     if (equipment_ids && equipment_ids.length > 0) {
+  //       const equipmentRepository = AppDataSource.getRepository(Equipment);
+  //       const sessionEquipmentRepository =
+  //         AppDataSource.getRepository(SessionEquipment);
+
+  //       for (const equipmentId of equipment_ids) {
+  //         const equipment = await equipmentRepository.findOneBy({
+  //           id: equipmentId,
+  //         });
+  //         if (equipment) {
+  //           await sessionEquipmentRepository.save({
+  //             session,
+  //             equipment,
+  //             hours,
+  //           });
+  //           total_price += equipment.price_per_hour * hours;
+  //         }
+  //       }
+
+  //       await sessionRepository.update(session.id, { total_price });
+  //     }
+
+  //     res.status(201).json({
+  //       message: "Booking created successfully",
+  //       total_price,
+  //       session_id: session.id,
+  //       access_code: accessCode,
+  //     });
+  //   } catch (error) {
+  //     console.error("Detailed error:", error);
+  //     console.log("Received data:", req.body);
+  //     res.status(500).json({
+  //       error: "Failed to create booking",
+  //       details: error.message,
+  //     });
+  //   }
+  // }
+
   static async createBooking(req: Request, res: Response): Promise<void> {
     try {
       const {
@@ -237,6 +339,9 @@ export class SessionController {
       }
 
       let total_price = studio.price_per_hour * hours;
+      const access_code = Math.floor(
+        100000 + Math.random() * 900000
+      ).toString();
 
       const sessionRepository = AppDataSource.getRepository(Session);
       const session = await sessionRepository.save({
@@ -246,6 +351,8 @@ export class SessionController {
         end_time: new Date(end_time),
         studio,
         total_price,
+        access_code,
+        access_granted: false,
       });
 
       if (equipment_ids && equipment_ids.length > 0) {
@@ -274,10 +381,103 @@ export class SessionController {
         message: "Booking created successfully",
         total_price,
         session_id: session.id,
+        access_code,
       });
     } catch (error) {
       console.error("Error creating booking:", error);
       res.status(500).json({ error: "Failed to create booking" });
+    }
+  }
+
+  static async verifyAccess(req: Request, res: Response): Promise<void> {
+    try {
+      const { access_code, lock_device_id, current_time } = req.body;
+
+      if (!access_code || !lock_device_id || !current_time) {
+        res.status(400).json({ error: "Missing required fields" });
+        return;
+      }
+
+      const currentDateTime = new Date(current_time);
+      const sessionRepository = AppDataSource.getRepository(Session);
+
+      const session = await sessionRepository
+        .createQueryBuilder("session")
+        .leftJoinAndSelect("session.studio", "studio")
+        .where("session.access_code = :access_code", { access_code })
+        .andWhere("studio.lock_device_id = :lock_device_id", { lock_device_id })
+        .andWhere("session.start_time <= :current_time", {
+          current_time: currentDateTime,
+        })
+        .andWhere("session.end_time >= :current_time", {
+          current_time: currentDateTime,
+        })
+        .getOne();
+
+      if (!session) {
+        res
+          .status(404)
+          .json({ error: "Invalid access code or expired session" });
+        return;
+      }
+
+      await sessionRepository.update(session.id, {
+        access_granted: true,
+        actual_entry_time: currentDateTime,
+      });
+
+      res.status(200).json({
+        message: "Access granted",
+        session_id: session.id,
+      });
+    } catch (error) {
+      console.error("Error verifying access:", error);
+      res.status(500).json({ error: "Failed to verify access" });
+    }
+  }
+
+  static async checkAndUpdateSessionStatus(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      const { current_time } = req.body;
+
+      if (!current_time) {
+        res
+          .status(400)
+          .json({ error: "Текущее время (current_time) обязательно" });
+        return;
+      }
+
+      const currentDateTime = new Date(current_time);
+      const sessionRepository = AppDataSource.getRepository(Session);
+
+      const expiredSessions = await sessionRepository
+        .createQueryBuilder("session")
+        .where("session.end_time <= :currentTime", {
+          currentTime: currentDateTime,
+        })
+        .andWhere("session.access_granted = :accessGranted", {
+          accessGranted: true,
+        })
+        .andWhere("session.actual_exit_time IS NULL")
+        .getMany();
+
+      for (const session of expiredSessions) {
+        await sessionRepository.update(session.id, {
+          access_granted: false,
+          actual_exit_time: currentDateTime,
+        });
+      }
+
+      res.status(200).json({
+        message: `Обновлено ${expiredSessions.length} сессий с истёкшим временем`,
+        updated_sessions: expiredSessions.map((s) => s.id),
+      });
+    } catch (error) {
+      console.error("Ошибка при обновлении статуса сессий:", error);
+      res.status(500).json({ error: "Не удалось обновить статусы сессий" });
     }
   }
 
