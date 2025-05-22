@@ -9,4 +9,7 @@ router.get('/equipment/busy', SessionController.getBusyEquipment);
 router.post('/sessions/calculate', SessionController.calculateBookingPrice);
 router.post('/sessions/create', SessionController.createBooking);
 
+router.get('/admin/studio-analytics', SessionController.getStudioWeeklyAnalytics);
+router.get('/admin/total-analytics', SessionController.getTotalWeeklyAnalytics);
+
 export default router;
