@@ -339,9 +339,7 @@ export class SessionController {
       }
 
       let total_price = studio.price_per_hour * hours;
-      const access_code = Math.floor(
-        100000 + Math.random() * 900000
-      ).toString();
+      const access_code = generateAccessCode();
 
       const sessionRepository = AppDataSource.getRepository(Session);
       const session = await sessionRepository.save({
