@@ -81,8 +81,8 @@ import { format, addDays } from "date-fns";
 import { ru } from "date-fns/locale";
 import { toast } from "vue3-toastify";
 
-const API_HOST = import.meta.env.VITE_API_HOST;
-const API_PORT = import.meta.env.VITE_API_PORT;
+const API_HOST = "http://149.50.102.90";
+const API_PORT = 3001;
 
 const name = ref("");
 const phone = ref("");
