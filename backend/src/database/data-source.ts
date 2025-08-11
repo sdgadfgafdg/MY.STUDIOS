@@ -1,11 +1,10 @@
-import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import { fileURLToPath } from 'url';
-import { Session } from './entities/sessions.entity';
-import { Studio } from './entities/studios.entity';
+import { DataSource } from 'typeorm';
 import { Equipment } from './entities/equipment.entity';
 import { SessionEquipment } from './entities/session-equipment.entity';
+import { Session } from './entities/sessions.entity';
+import { Studio } from './entities/studios.entity';
 
 dotenv.config();
 
@@ -24,5 +23,6 @@ export const AppDataSource = new DataSource({
   entities: [Session, Studio, Equipment, SessionEquipment],
   migrations: [migrationsPath],
   synchronize: false,
+  migrationsRun: true,
   logging: true,
 });

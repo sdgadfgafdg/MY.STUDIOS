@@ -1,0 +1,49 @@
+name: Deploy coursework
+'on':
+  push:
+    branches:
+      - main
+    paths:
+      - backend/**
+      - frontend/**
+      - docker-compose.yml
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to deploy to
+        required: true
+        default: production
+        type: choice
+        options:
+          - production
+          - staging
+      force_rebuild:
+        description: Force rebuild all containers
+        required: false
+        type: boolean
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Stop and remove old containers
+        run: |
+          docker compose down || true
+      - name: Build and deploy
+        run: |
+          docker compose up -d --build --force-recreate --no-deps
+        env:
+          HOST: '${{ secrets.HOST }}'
+          PORT: '${{ secrets.PORT }}'
+          TYPEORM_SYNCHRONIZE: '${{ secrets.TYPEORM_SYNCHRONIZE }}'
+          TYPEORM_LOGGING: '${{ secrets.TYPEORM_LOGGING }}'
+          FRONT_HOST: '${{ secrets.FRONT_HOST }}'
+          FRONT_PORT: '${{ secrets.FRONT_PORT }}'
+          DB_HOST: database_myc
+          DB_PORT: 5432
+          DB_USERNAME: '${{ secrets.DB_USERNAME }}'
+          DB_PASSWORD: '${{ secrets.DB_PASSWORD }}'
+          DB_NAME: '${{ secrets.DB_NAME }}'
+          VITE_API_HOST: '${{ secrets.VITE_API_HOST }}'
+          VITE_API_PORT: '${{ secrets.VITE_API_PORT }}'

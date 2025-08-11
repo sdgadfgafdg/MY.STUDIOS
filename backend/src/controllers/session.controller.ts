@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../database/data-source";
 import { Between } from "typeorm";
-import { Session } from "../database/entities/sessions.entity";
+import { AppDataSource } from "../database/data-source";
 import { Equipment } from "../database/entities/equipment.entity";
 import { SessionEquipment } from "../database/entities/session-equipment.entity";
+import { Session } from "../database/entities/sessions.entity";
 import { Studio } from "../database/entities/studios.entity";
-import { LessThanOrEqual, MoreThanOrEqual } from "typeorm";
 import { generateAccessCode } from "../utils/access-code";
 
 export class SessionController {

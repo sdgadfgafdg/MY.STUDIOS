@@ -1,0 +1,66 @@
+services:
+  database_myc:
+    container_name: database_myc
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "54321:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - back
+
+  app-back:
+    container_name: mycourse-app-back
+    restart: always
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    environment:
+      PORT: ${PORT}
+      HOST: ${HOST}
+      TYPEORM_SYNCHRONIZE: ${TYPEORM_SYNCHRONIZE}
+      TYPEORM_LOGGING: ${TYPEORM_LOGGING}
+      FRONT_HOST: ${FRONT_HOST}
+      FRONT_PORT: ${FRONT_PORT}
+      DB_HOST: database_myc
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    depends_on:
+      - database_myc
+    ports:
+      - "3001:3000"
+    networks:
+      - back
+
+  app-front:
+    container_name: mycourse-app-front
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      VITE_API_HOST: ${VITE_API_HOST}
+      VITE_API_PORT: ${VITE_API_PORT}
+    ports:
+      - "8083:3000"
+    depends_on:
+      - app-back
+    networks:
+      - back
+      - front
+
+volumes:
+  db_data:
+
+networks:
+  back:
+    driver: bridge
+  front:
+    driver: bridge
