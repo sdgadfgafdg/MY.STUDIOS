@@ -36,8 +36,8 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import roomsData from "@/assets/studios-data.json";
-import equipmentData from "@/assets/studios-eq.json";
+import roomsData from "../assets/studios-data.json";
+import equipmentData from "../assets/studios-eq.json";
 
 const rooms = roomsData.rooms;
 const selectedRoom = ref(Object.keys(rooms)[0]);
