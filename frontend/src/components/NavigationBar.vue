@@ -51,6 +51,7 @@ onUnmounted(() => {
 
   &.scrolled {
     opacity: 0;
+
     &:hover {
       opacity: 1;
     }
@@ -79,12 +80,14 @@ onUnmounted(() => {
 .links-wrapper {
   display: flex;
   gap: 32px;
+
   span {
     font-weight: 500;
     font-size: 16px;
     color: #333;
     cursor: pointer;
     transition: color 0.3s ease;
+
     &:hover {
       color: #3448c5;
     }

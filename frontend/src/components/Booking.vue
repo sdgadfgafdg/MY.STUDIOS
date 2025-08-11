@@ -9,23 +9,14 @@
 
     <div class="form-group">
       <label>Телефон</label>
-      <input
-        v-model="phone"
-        type="text"
-        :class="{ error: phoneError }"
-        placeholder="+7XXXXXXXXXX"
-      />
+      <input v-model="phone" type="text" :class="{ error: phoneError }" placeholder="+7XXXXXXXXXX" />
     </div>
 
     <div class="form-group">
       <label>Дата репетиции</label>
       <select v-model="selectedDate">
         <option disabled value="">Выберите дату</option>
-        <option
-          v-for="date in availableDates"
-          :key="date.value"
-          :value="date.value"
-        >
+        <option v-for="date in availableDates" :key="date.value" :value="date.value">
           {{ date.label }}
         </option>
       </select>
@@ -53,12 +44,8 @@
 
         <select v-model="timeTo">
           <option disabled value="">До</option>
-          <option
-            v-for="time in timeSlots"
-            :key="time + '-to'"
-            :value="time"
-            :disabled="parseInt(time) <= parseInt(timeFrom)"
-          >
+          <option v-for="time in timeSlots" :key="time + '-to'" :value="time"
+            :disabled="parseInt(time) <= parseInt(timeFrom)">
             {{ time }}
           </option>
         </select>
@@ -375,9 +362,11 @@ watch([selectedDate, studioId], fetchAvailableTimeSlots);
   0% {
     box-shadow: 0 0 0 0 rgba(52, 72, 197, 0.4);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(52, 72, 197, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(52, 72, 197, 0);
   }

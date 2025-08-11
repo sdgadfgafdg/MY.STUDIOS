@@ -1,49 +1,27 @@
 <template>
   <div class="studio-selector-container">
     <div class="studio-selector">
-      <button
-        v-for="(images, roomName) in rooms"
-        :key="roomName"
-        @click="selectRoom(roomName)"
-        :class="['studio-btn', { active: selectedRoom === roomName }]"
-      >
+      <button v-for="(images, roomName) in rooms" :key="roomName" @click="selectRoom(roomName)"
+        :class="['studio-btn', { active: selectedRoom === roomName }]">
         {{ roomName }}
       </button>
     </div>
 
     <div class="content-wrapper">
-      <div
-        class="gallery-container"
-        @mouseenter="pauseSlideshow"
-        @mouseleave="resumeSlideshow"
-      >
+      <div class="gallery-container" @mouseenter="pauseSlideshow" @mouseleave="resumeSlideshow">
         <transition name="fade" mode="out-in">
-          <img
-            :key="currentImageIndex"
-            :src="currentImage"
-            alt="Room image"
-            class="gallery-image"
-          />
+          <img :key="currentImageIndex" :src="currentImage" alt="Room image" class="gallery-image" />
         </transition>
         <div class="dots-container">
-          <div
-            v-for="(image, index) in currentRoomImages"
-            :key="index"
-            @click="goToSlide(index)"
-            :class="{ active: currentImageIndex === index }"
-            class="dot"
-          ></div>
+          <div v-for="(image, index) in currentRoomImages" :key="index" @click="goToSlide(index)"
+            :class="{ active: currentImageIndex === index }" class="dot"></div>
         </div>
       </div>
 
       <div class="equipment-container">
         <h3>Оборудование</h3>
         <div class="equipment-list">
-          <div
-            class="equipment-item"
-            v-for="(item, index) in currentEquipment"
-            :key="index"
-          >
+          <div class="equipment-item" v-for="(item, index) in currentEquipment" :key="index">
             <img :src="item.photo" :alt="item.name" class="equipment-image" />
             <div class="equipment-info">
               <div class="equipment-name">{{ item.name }}</div>
@@ -265,9 +243,9 @@ onUnmounted(() => {
 }
 
 .equipment-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .equipment-item {

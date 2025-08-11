@@ -3,19 +3,14 @@
   <div class="calendar-container">
     <div class="btns-wrapper">
       <div class="studio-selector">
-        <button
-          v-for="id in 3"
-          :key="id"
-          :class="['studio-btn', { active: selectedStudio === id }]"
-          @click="selectStudio(id)"
-        >
+        <button v-for="id in 3" :key="id" :class="['studio-btn', { active: selectedStudio === id }]"
+          @click="selectStudio(id)">
           Зал {{ id }}
         </button>
       </div>
     </div>
 
     <div class="calendar">
-      <!-- Days header -->
       <div class="calendar-header">
         <div class="time-column"></div>
         <div v-for="date in dateRange" :key="date" class="date-column">
@@ -23,20 +18,16 @@
         </div>
       </div>
 
-      <!-- Time slots -->
       <div class="calendar-body">
         <div class="time-slots">
           <div v-for="hour in timeSlots" :key="hour" class="time-slot">
             <div class="time-column">{{ formatTime(hour) }}</div>
             <div v-for="date in dateRange" :key="date" class="slot-container">
-              <div
-                class="slot"
-                :class="{
-                  booked: isSlotBooked(date, hour),
-                  'booking-start': isBookingStart(date, hour),
-                  'booking-end': isBookingEnd(date, hour),
-                }"
-              >
+              <div class="slot" :class="{
+                booked: isSlotBooked(date, hour),
+                'booking-start': isBookingStart(date, hour),
+                'booking-end': isBookingEnd(date, hour),
+              }">
                 <div v-if="isBookingStart(date, hour)" class="booking-info">
                   {{ getBookingInfo(date, hour) }}
                 </div>
@@ -316,7 +307,7 @@ onMounted(() => {
   }
 
   &.booked {
-    background-color: rgba(244, 67, 54, 0.1);
+    background-color: rgba(244, 67, 54, 0.2);
   }
 
   &.booking-start {

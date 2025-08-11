@@ -9,16 +9,24 @@
     </div>
 
     <transition name="staggered-fade" appear>
-      <div v-if="mounted" class="fade-item"><StudioSelector /></div>
+      <div v-if="mounted" class="fade-item">
+        <StudioSelector />
+      </div>
     </transition>
     <transition name="staggered-fade" appear>
-      <div v-if="mounted" class="fade-item"><MapInfo /></div>
+      <div v-if="mounted" class="fade-item">
+        <MapInfo />
+      </div>
     </transition>
     <transition name="staggered-fade" appear>
-      <div v-if="mounted" class="fade-item"><Calendar /></div>
+      <div v-if="mounted" class="fade-item">
+        <Calendar />
+      </div>
     </transition>
     <transition name="staggered-fade" appear>
-      <div v-if="mounted" class="fade-item"><Footer /></div>
+      <div v-if="mounted" class="fade-item">
+        <Footer />
+      </div>
     </transition>
   </div>
 </template>
@@ -72,6 +80,7 @@ onMounted(() => {
   from {
     width: 0;
   }
+
   to {
     width: 100%;
   }
@@ -100,23 +109,37 @@ onMounted(() => {
   transform: translateY(30px);
 }
 
-.staggered-fade-move { transition: all 0.8s ease; }
+.staggered-fade-move {
+  transition: all 0.8s ease;
+}
 
-.staggered-fade-enter-active:nth-child(1) { transition-delay: 0.2s; }
-.staggered-fade-enter-active:nth-child(2) { transition-delay: 0.4s; }
-.staggered-fade-enter-active:nth-child(3) { transition-delay: 0.6s; }
-.staggered-fade-enter-active:nth-child(4) { transition-delay: 0.8s; }
+.staggered-fade-enter-active:nth-child(1) {
+  transition-delay: 0.2s;
+}
+
+.staggered-fade-enter-active:nth-child(2) {
+  transition-delay: 0.4s;
+}
+
+.staggered-fade-enter-active:nth-child(3) {
+  transition-delay: 0.6s;
+}
+
+.staggered-fade-enter-active:nth-child(4) {
+  transition-delay: 0.8s;
+}
 
 .navbar-slide-enter-active {
   transition: all 0.6s ease;
 }
+
 .navbar-slide-enter-from {
   transform: translateY(-100%);
   opacity: 0;
 }
+
 .navbar-slide-enter-to {
   transform: translateY(0);
   opacity: 1;
 }
-
 </style>
