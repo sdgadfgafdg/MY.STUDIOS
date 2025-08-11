@@ -4,6 +4,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
+dotenv
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -11,7 +13,12 @@ export default defineConfig({
     vueDevTools(),
   ],
   server: {
-    port: 5173
+    host: "0.0.0.0",
+    port: process.env.VITE_API_PORT,
+  },
+  devServer: {
+    host: "0.0.0.0",
+    port: process.env.VITE_API_PORT,
   },
   resolve: {
     alias: {

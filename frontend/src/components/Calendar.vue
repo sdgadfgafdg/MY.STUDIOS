@@ -44,8 +44,8 @@
 import Booking from "./Booking.vue";
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
-const API_HOST = import.meta.env.VITE_API_HOST;
-const API_PORT = import.meta.env.VITE_API_PORT;
+const API_HOST = import.meta.env.VITE_API_HOST || 'http://localhost';
+const API_PORT = import.meta.env.VITE_API_PORT || 5000;
 
 const selectedStudio = ref(1);
 const bookings = ref([]);
