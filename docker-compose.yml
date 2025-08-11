@@ -18,7 +18,7 @@ services:
     container_name: mycourse-app-back
     restart: always
     build:
-      context: ./back
+      context: ./backend
       dockerfile: Dockerfile
     environment:
       PORT: ${PORT}
