@@ -16,6 +16,6 @@ WORKDIR /app
 COPY package.json ./
 COPY --from=builder /app/node_modules ./node_modules
 
-EXPOSE 3000
+EXPOSE 5173
 
 CMD ["npm", "run", "dev"]
