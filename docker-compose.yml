@@ -1,6 +1,6 @@
 services:
-  database_myc:
-    container_name: database_myc
+  mystudios-mys:
+    container_name: mystudios-mys
     image: postgres:16
     restart: always
     environment:
@@ -15,7 +15,7 @@ services:
       - back
 
   app-back:
-    container_name: mycourse-app-back
+    container_name: mystudios-app-back
     restart: always
     build:
       context: ./backend
@@ -33,14 +33,14 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
     depends_on:
-      - database_myc
+      - mystudios-mys
     ports:
       - "3001:3001"
     networks:
       - back
 
   app-front:
-    container_name: mycourse-app-front
+    container_name: mystudios-app-front
     restart: always
     build:
       context: ./frontend
