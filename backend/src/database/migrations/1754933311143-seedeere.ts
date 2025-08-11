@@ -11,7 +11,7 @@ export class Keys1747951691545 implements MigrationInterface {
     price_per_hour, 
     lock_device_id, 
     is_locked, 
-    lock_api_Key
+    lock_api_key
 ) 
 VALUES (
     1, 
@@ -29,7 +29,7 @@ VALUES (
     price_per_hour, 
     lock_device_id, 
     is_locked, 
-    lock_api_Key
+    lock_api_key
 ) 
 VALUES (
     2, 
@@ -47,7 +47,7 @@ VALUES (
     price_per_hour, 
     lock_device_id, 
     is_locked, 
-    lock_api_Key
+    lock_api_key
 ) 
 VALUES (
     3, 
