@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Keys1747951691544 implements MigrationInterface {
-    name = 'Keys1747951691544';
+export class Keys1747951691545 implements MigrationInterface {
+    name = 'Keys1747951691545';
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`INSERT INTO studio (
