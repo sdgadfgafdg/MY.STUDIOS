@@ -1,6 +1,6 @@
 services:
-  mystudios-mys:
-    container_name: mystudios-mys
+  db-mys:
+    container_name: db-mys
     image: postgres:16
     restart: always
     environment:
@@ -27,7 +27,7 @@ services:
       TYPEORM_LOGGING: ${TYPEORM_LOGGING}
       FRONT_HOST: ${FRONT_HOST}
       FRONT_PORT: ${FRONT_PORT}
-      DB_HOST: database_myc
+      DB_HOST: db-mys
       DB_PORT: 5432
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
