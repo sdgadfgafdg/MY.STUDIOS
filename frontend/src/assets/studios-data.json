@@ -1,17 +1,17 @@
 {
   "rooms": {
     "Зал 1": [
-      "./src/assets/studios/big1.jpg",
-      "./src/assets/studios/big2.jpg",
-      "./src/assets/studios/big3.jpg"
+      "/studios/big1.jpg",
+      "/studios/big2.jpg",
+      "/studios/big3.jpg"
     ],
     "Зал 2": [
-      "./src/assets/studios/medium2.jpg",
-      "./src/assets/studios/medium1.png"
+      "/studios/medium2.jpg",
+      "/studios/medium1.png"
     ],
     "Зал 3": [
-      "./src/assets/studios/small1.jpg",
-      "./src/assets/studios/small2.jpg"
+      "/studios/small1.jpg",
+      "/studios/small2.jpg"
     ]
   }
 }
