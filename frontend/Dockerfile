@@ -1,21 +1,16 @@
-FROM node:24.5-alpine3.22 AS builder
+FROM node:24.5-alpine3.22
+
+RUN npm install -g http-server
 
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm install --frozen-lockfile
+COPY package*.json ./
+
+RUN npm install
 
 COPY . .
 
 RUN npm run build
 
-FROM node:24.5-alpine3.22 AS runner
-
-WORKDIR /app
-
-COPY package.json ./
-COPY --from=builder /app/node_modules ./node_modules
-
-EXPOSE 5173
-
-CMD ["npm", "run", "dev"]
+EXPOSE 8083
+CMD [ "http-server", "dist" ]
