@@ -33,7 +33,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
     depends_on:
-      - mystudios-mys
+      - db-mys
     ports:
       - "3001:3001"
     networks:
