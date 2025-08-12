@@ -2,21 +2,19 @@ services:
   db-mys:
     container_name: db-mys
     image: postgres:16
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "54321:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
-      - back
+      - database
 
   app-back:
     container_name: mystudios-app-back
-    restart: always
+    restart: unless-stopped
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -37,11 +35,11 @@ services:
     ports:
       - "3001:3001"
     networks:
-      - back
+      - database
 
   app-front:
     container_name: mystudios-app-front
-    restart: always
+    restart: unless-stopped
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -52,15 +50,10 @@ services:
       - "8083:8080"
     depends_on:
       - app-back
-    networks:
-      - back
-      - front
 
 volumes:
   db_data:
 
 networks:
-  back:
-    driver: bridge
-  front:
-    driver: bridge
+  database:
+    internal: true
